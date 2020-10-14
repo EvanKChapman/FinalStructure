@@ -1,4 +1,8 @@
 
+
+
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -41,6 +45,7 @@
 <link rel="stylesheet" type="text/css"href="static/css/flexslider.css">
 <link rel="stylesheet" type="text/css"href="static/css/jquery.mobile-menu.css">
 
+
 <!-- Google Fonts -->
 <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
@@ -59,6 +64,27 @@
  
   
   <!-- Main Container -->
+  
+      <!-- Timer -->
+
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+
+
+
+					<!-- End Timer -->
   <section class="main-container col2-right-layout">
     <div class="main container">
       <div class="row">
@@ -92,7 +118,7 @@
                 <li><a href="#acc_update" data-toggle="tab" aria-expanded="false"><span> Address </span></a></li>
                 <li class=""> <a href="#acc_cards" data-toggle="tab" aria-expanded="false">Cards</a> </li>
                 <li class=""> <a href="#acc_password" data-toggle="tab" aria-expanded="false">Change Password</a> </li>
-                <li class=""> <a href="#acc_products" data-toggle="tab" aria-expanded="false">My Products</a> </li>
+                
                 <li><a href="logout"><span> Logout</span></a></li>  
               </ul>
             </div>
@@ -101,6 +127,15 @@
           <!--block block-account--> 
           
         </aside>
+        
+    
+        
+        
+        
+        
+        
+        
+        
         
         <div class="col-main col-sm-9 animated" style="visibility: visible;">
           <div class="my-account">
@@ -114,7 +149,7 @@
                   <li class=""> <a href="#acc_update" data-toggle="tab" aria-expanded="false">Update Address</a></li>
                   <li class=""> <a href="#acc_cards" data-toggle="tab" aria-expanded="false">Cards</a> </li>
                   <li class=""> <a href="#acc_password" data-toggle="tab" aria-expanded="false">Change Password</a> </li>
-                  <li class=""> <a href="#acc_products" data-toggle="tab" aria-expanded="false">My Products</a> </li>
+                 
                 </ul>
                 <div id="productTabContent" class="tab-content">
                   <div class="tab-pane fade active in" id="acc_info">
@@ -344,105 +379,17 @@
 						            </div>
 			                    </div>
 			                  </li>
-			                  		                 
-			                </ul>
+			                  
+			                   </ul>
 			              </div>
 			              <div class="buttons-set">
 			                <p class="required">* Required Fields</p>
 			                <button type="submit" title="" class="button"><span>Save </span></button>
 			              </div>
-			            </form:form>			            
-			           
-			          </div>
-			        </div>
-                     
-                    </div>
-                  </div>
-                  
-                  <div class="tab-pane fade" id="acc_cards">
-                    <div class="product-tabs-content-inner clearfix">
-                     
-                    <div class="row">
-				            
-				        <div class="col-main col-sm-4 animated" style="visibility: visible;">
-				         <div class="page-title">
-				              <h1 class="text center">Add new Card</h1>
-				          </div>
-				          <div class="my-account">				            
-				            <div class="line"></div>
-				            <div class="dashboard">
-				               <form:form action="addcard" modelAttribute="card" method="post" role="form"  >		                 
-		                  <ul class="form-list">
-		                    <li>
-		                      <label for="cardno">Card Number<em class="required">*</em></label>
-		                      <div class="input-box">
-		                        <form:input type="number" class="input-text" path="cardno" placeholder="Card Number" min="14" />
-		                      </div>
-		                    </li>
-		                    <li class="fields">
-		                      <div class="field">
-		                        <label for="expiry">Expiry Date<em class="required">*</em></label>
-		                        <div class="input-box">
-		                          <form:input type="month" class="form-control"  path="expiry" placeholder="Expiry Date"/>		                    
-		                        </div>
-		                      </div>
-		                      <div class="field">
-		                        <label for="secode">Card Security<em class="required">*</em></label>
-		                        <div class="input-box">
-		                          <form:input type="number" class="input-text" path="secode" placeholder="Card Security" min="3" />
-							
-		                        </div>
-		                      </div>
-		                    </li>
-		                  </ul>
-		                <%-- <form:input type="hidden" path="id" value="${user_account.id}"/> --%>
-		                <form:input type="hidden" path="user" value="${user_account.id}"/>
-		                <div class="buttons-set">
-		                  <p class="required">* Required Fields</p>
-		                  <button type="submit" title="Save" class="btn btn-default"><span>Save</span></button>
-		                  <button type="reset" class="btn btn-danger" >Reset</button>
-		                </div>
-		              </form:form>
-				             
-				            </div>
-				            <!--dashboard--> 
-				          </div>
-				        </div>
-				        <div class="col-main col-sm-6 animated" style="visibility: visible;">
-				         <div class="page-title">
-				              <h1 class="text center">My Credit Cards</h1>
-				          </div>
-				          
-				        <c:if test="${not empty user_account.getPaymentMethod()}">
-	                    <table class="table ">
-						 <tr class="text-success">
-						 <th>#</th>
-						 <th>Card Number</th>
-						 <th>Expiry</th>
-						 <th>Type</th>
-						 </tr>
-						 <tbody>
-	                    <c:set var="count" value="0"/>
-	                    <c:forEach var="cards" items="${user_account.getPaymentMethod()}">
-					    <c:set var="count" value="${count+1}"/>
-					     <tr>
-					       <td> ${count}.</td>
-					       <td> ${cards.cardno}</td>
-					       <td>
-					        ${cards.expiry}
-					        </td>
-					       <td> Visa
-					       <a href="deletecard?id=${cards.id}" onclick="confirmed(); return false;" class="btn btn-default"> <i class="fa fa-trash"></i></a>
-					       </td>			              
-					     </tr>
-					    </c:forEach>
-					    </tbody> 
-					    </table>
-					    </c:if>
-
-				        </div>
-				        <!--col-right sidebar col-sm-3--> 
-				      </div>
+			            </form:form>
+			                 
+			              </div>    
+</div>
 	                 </div>
                   </div>
                   <div class="tab-pane fade" id="acc_password">
@@ -472,205 +419,10 @@
 		              </div>
                     </div>
                   </div>
-                  
-                  <div class="tab-pane fade" id="acc_products">
-                      <div class="product-tabs-content-inner clearfix">
-                       <div class="page-title">
-				           <h1 class="text center">My Products <a  href="#" data-toggle="modal" data-target="#edit" 
-                            class="btn btn-default btn-md">Add Product <i class="fa fa-plus" aria-hidden="true"></i>
-                     		</a>
-                     		</h1>
-				       </div>
-                       <div class="col-main col-sm-12 animated" style="visibility: visible;">				         
-				          			            
-				            <div class="line"></div>
-				            <div class="dashboard">
-				              Table
-				            </div>				            
-				         
-				        </div>
-	                 </div>
-                  </div>
-                </div>
-            </div>
-            
-          </div>
-        </div>
-     
-      </div>
-    </div>
-  </section>
-  <!-- Main Container End --> 
- 
-  <hr>
- 
-  <jsp:include page="components/footer.jsp"/>
-  						<div class="modal fade" id="edit">
-  					    <div class="modal-dialog modal-lg">
-						<div class="modal-content">	
-						<div class="modal-header">
-			                <h5 class="modal-">
-			                Add New product
-			                <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
-			                </h5>
-			              </div>      
-						<!-- Modal body -->
-						<div class="modal-body">			    		
-			    		  <form:form action="saveproduct" modelAttribute="product" method="post" role="form" enctype="multipart/form-data" > 
-			    		  <fieldset class="group-select">
-			              <ul>
-			                <li id="billing-new-address-form">
-			                  <fieldset>
-			                    <ul>
-			                    
-			                      <li class="">
-				                    <div class="">
-			                          <label for="name">Name</label>
-			                          <br>
-			                          <form:input path="name" placeholder="Product Name" class="input-text" />
-			                        </div>
-				                  </li>
-				                  
-			                      <li>
-			                        <div class="">
-			                          <div class="input-box ">
-			                            <label for="type"> Section <span class="required">*</span></label>
-			                            <br>
-			                            <form:input path="type" placeholder="Section like electronics etc" class="input-text" />
-			                          </div>
-			                          <div class="input-box">
-			                            <label for="price"> Price<span class="required">*</span> </label>
-			                            <br>
-			                            <form:input path="price" placeholder="product Price" class="input-text" />
-			                          </div>
-			                          
-			                        </div>
-			                      </li>
-			                      
-				                  <li>
-			                        <div class="">
-			                          <div class="input-box">
-			                            <label for="type"> Size <span class="required">*</span></label>
-			                            <br>
-			                            <form:select path="size" id="size" multiple="true" class="validate-select required-entry" required="required" > 
-						                    <option value="" >Select</option>
-						                    <c:forEach items="${sizes}" var="item">
-				                            <option value="${item}" > ${item}</option>
-				                            </c:forEach>
-				                      </form:select>
-			                          </div>
-			                          <div class="input-box">
-			                            <label for="name"> Color<span class="required">*</span> </label>
-			                            <br>
-			                            <form:select path="color" id="color" multiple="true" class="input-text"  required="required" > 
-					                    <option value="" >Select</option>
-					                    <c:forEach items="${cols}" var="item">			                        
-				                        <option value="${item}" > ${item}</option>
-					                    </c:forEach>
-					                    </form:select>
-			                          </div>
-			                          
-			                        </div>
-			                      </li>
-			                      <li class="">
-			                        <label for="des">Description<em class="required">*</em></label>
-			                        <br>
-			                        <div style="float:none" class="">
-			                          <form:textarea path="des"  placeholder="Description" class="input-text" cols="5" rows="4"  required="required"/>
-			                         </div>
-			                      </li>
-			                      <li class="">
-				                   <div class="input-box">
-			                           <form:input path="file" type="file" class="input-text"  required="true"/>
-			                       </div>
-			                       <div class="input-box">
-			                           <form:input path="file" type="file" class="input-text"  />
-			                       </div>
-			                       <div class="input-box">
-			                           <form:input path="file" type="file" class="input-text"  />
-			                       </div>
-			                       <div class="input-box">
-			                           <form:input path="file" type="file" class="input-text"  />
-			                       </div>   
-				                  </li>
-			                    </ul>
-			                  </fieldset>
-			                </li>
-			                    <form:input type="hidden" path="id"/> 
-			                    <form:input type="hidden" path="users_id" value="${user_account.id}"/>
-			                    <form:input type="hidden" path="img" />
-			                    <form:input type="hidden" path="email" value="${user_account.email}" />
-			                <li class="buttons-set">
-			                  <button type="submit" title="Submit" class="button submit"> <span> Submit </span> </button>
-			                   <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-danger"><span aria-hidden="true">Close</span></button>
-			                  
-			                </li>
-			              </ul>
-			            </fieldset>
-			            </form:form>
-	                      
-	                     </div>
-					    </div>	
-				      </div>
-					  </div>
-					  
-					  
-					  <div class="tab-pane fade" id="acc_products">
-                     <a  href="#" data-toggle="modal" data-target="#edit" 
-                        class="btn btn-default btn-md">Add Product <i class="fa fa-plus" aria-hidden="true"></i>
-                     </a><br><br>
-                    <div class="col-md-10">
-                     
-                    <c:if test="${not empty user_account.getProducts()}">
-                    <table class="table ">
-					 <tr class="text-success">
-					 <th>#</th>
-					 <th>Product</th>
-					 <th></th>					 
-					 <th>Department</th>
-					 <th>Action</th>
-					 </tr>
-					 <tbody>
-                    <c:set var="count" value="0"/>
-                    <c:forEach var="pi" items="${user_account.getProducts()}">
-				    <c:set var="count" value="${count+1}"/>
-				     <tr>
-				       <td> ${count}.</td>
-				       <td class="">
-                        <div class="product-info">
-                        <a href="productdetails?id=${pi.id}">
-                          <img width="80" src="static/img/products/${pi.id}/${pi.img}" alt="" />
-                         </a>
-                        </div>
-                        
-                      </td>
-                      <td>
-				        ${pi.name} <br> ${pi.color} <br> $<fmt:formatNumber value="${pi.price}" maxFractionDigits="2" minFractionDigits="2"/>
-				       </td>				       
-				       <td>
-				        ${pi.type}
-				       </td>
-				       <td>
-				       <a href="deleteproduct?id=${pi.id}" onclick="confirmed(); return false;" class="btn btn-default"> <i class="fa fa-trash"></i></a>
-				       
-                      </td>			              
-				     </tr>
-				    </c:forEach>
-				    </tbody> 
-				    </table>
-				    </c:if>
-               
-                    </div>
-                  </div>
-					  
-					  
-					  
-  
-  
-  
-  
-   
-				      <div class="modal fade" id="edits">
+
+<jsp:include page="components/footer.jsp"/>
+
+<div class="modal fade" id="edits">
 					    <div class="modal-dialog modal-md">
 						<div class="modal-content">	
 						<div class="modal-header">
@@ -679,9 +431,10 @@
 			                </h5>
 			              </div>      
 						<!-- Modal body -->
-						<div class="modal-body">			    		
-			    		  
-	                      <form:form action="updatemyinfo" modelAttribute="user" method="post" id="form-validate" >
+						<div class="modal-body">
+
+
+ <form:form action="updatemyinfo" modelAttribute="user" method="post" id="form-validate" >
 			               
 			                  <input name="id" type="hidden" value="${user_account.id}" >
 			                  <h2 class="legend">Edit Information</h2>
@@ -703,8 +456,8 @@
 			                      </div>
 			                    </li>
 			                  </ul>
-			                	                
-			                <div class="buttons-set">
+
+ 								<div class="buttons-set">
 			                  <p class="required">* Required Fields</p>
 			                  <button type="submit" title="Save" class="btn btn-info"><span>Save</span></button>
 			                  <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-danger">Close</button>
@@ -763,10 +516,6 @@
 				    </div>
 					</div> 
 
-					
-					  
-					  
-					  	
 </div>					  
 <!-- JavaScript --> 
 <script type="text/javascript" src="static/js/jquery.min.js"></script> 
@@ -777,7 +526,10 @@
 <script type="text/javascript" src="static/js/owl.carousel.min.js"></script> 
 <script type="text/javascript" src="static/js/jquery.mobile-menu.min.js"></script> 
 <script type="text/javascript" src="static/js/cloud-zoom.js"></script>
+
   <script type="text/javascript">
+ 
+
     function preview_image(event) 
     {
      var reader = new FileReader();
