@@ -53,6 +53,9 @@
 </head>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+ <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link href="static/css/pomodoro-timer.css" rel="stylesheet">
+<link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
  
  
 <body class="customer-account-index customer-account inner-page">
@@ -66,9 +69,45 @@
   <!-- Main Container -->
   
       <!-- Timer -->
+</div>
+<div class="jquery-script-clear"></div>
+  <div class="container" style="margin-top:150px;">
+    <div class="page-header">
+      <h1 class="text-center">Pom Retain</h1>
+      <h2 class="text-center">
+        <span>
+          <button id="pomodoroButton" class="btn btn-default" type="submit" onclick="onPomodoroTimer()" >Pomodoro</button>
+          <button id="shortButton" class="btn btn-default" type="submit" onclick="onShortTimer()">Short Break</button>
+          <button id="longButton" class="btn btn-default" type="submit" onclick="onLongTimer()">Long Break</button>
+        </span>
+      </h2>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-body text-center">
+        <div class="timer-time timer-container">
+          <div class="timer-time-set timer-box" id="currentTime">
+            <span id="hoursValue">00</span><span>:</span><span id="minutesValue">00</span><span>:</span><span id="secondsValue">00</span>
+          </div>
+          <div class="timer-time-set timer-box" id="nextTime">
+            <span id="hoursNext">00</span><span>:</span><span id="minutesNext">00</span><span>:</span><span id="secondsNext">00</span>
+          </div>
+        </div>
+        <div>
+          <button id="restartButton" class="btn btn-warning btn-lg" type="submit" onclick="onResetTimer()">
+            <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span> Reset
+          </button>
+          <button id="startButton" class="btn btn-primary btn-lg" type="submit" onclick="onStartTimer()">
+            <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Start
+          </button>
+          <button id="stopButton" class="btn btn-danger btn-lg" type="submit" onclick="onStopTimer()">
+            <span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Stop
+          </button>
+        </div>
+      </div>
 
-				
-				
+    </div>
+
+  </div>		
 				
 				
 				
@@ -526,6 +565,7 @@
 <script type="text/javascript" src="static/js/owl.carousel.min.js"></script> 
 <script type="text/javascript" src="static/js/jquery.mobile-menu.min.js"></script> 
 <script type="text/javascript" src="static/js/cloud-zoom.js"></script>
+<script src="static/js/pomodoro-timer.js"></script>
 
   <script type="text/javascript">
  
@@ -549,8 +589,25 @@
             } else {
                return false;
             }
-     }
+     }   
     
 </script> 
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
 </body>
 </html>
