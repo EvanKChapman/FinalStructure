@@ -27,20 +27,6 @@ function onPomodoroTimer(){
   $('#pomodoroButton').addClass('btn-success');
 }
 
-function onShortTimer(){
-
-  stopTimer();
-
-  gHours = 0;
-  gMinutes = 5;
-  gSeconds = 0;
-
-  resetTimer();
-
-  $('#pomodoroButton').removeClass('btn-success');
-  $('#longButton').removeClass('btn-success');
-  $('#shortButton').addClass('btn-success');
-}
 
 function onLongTimer(){
 
@@ -56,6 +42,10 @@ function onLongTimer(){
   $('#shortButton').removeClass('btn-success');
   $('#longButton').addClass('btn-success');
 }
+
+function increaseTime() {
+	 remainingTime+=(1*1000);
+};
 
 function onStartTimer(){
   stopTimer();

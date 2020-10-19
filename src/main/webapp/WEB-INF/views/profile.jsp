@@ -41,8 +41,8 @@
 <link rel="stylesheet" type="text/css"href="static/css/style.css" media="all">
 <link rel="stylesheet" type="text/css"href="static/css/revslider.css" >
 <link rel="stylesheet" type="text/css"href="static/css/owl.carousel.css">
-<link rel="stylesheet" type="text/css"href="static/css/owl.theme.css">
-<link rel="stylesheet" type="text/css"href="static/css/flexslider.css">
+<!-- <link rel="stylesheet" type="text/css"href="static/css/owl.theme.css">
+<link rel="stylesheet" type="text/css"href="static/css/flexslider.css"> -->
 <link rel="stylesheet" type="text/css"href="static/css/jquery.mobile-menu.css">
 
 
@@ -50,6 +50,7 @@
 <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300italic,300,600,600italic,400italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
 </head>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
@@ -59,7 +60,7 @@
  
  
 <body class="customer-account-index customer-account inner-page">
-<div id="page"> 
+ <div id="page">
   
   <!-- Header -->
   <jsp:include page="components/header.jsp"/>
@@ -69,17 +70,36 @@
   <!-- Main Container -->
   
       <!-- Timer -->
-</div>
+     
+      
+	 </div> 
 <div class="jquery-script-clear"></div>
-  <div class="container" style="margin-top:150px;">
+  <div class="container" style="margin-top:50px;">
     <div class="page-header">
       <h1 class="text-center">Pom Retain</h1>
       <h2 class="text-center">
         <span>
-          <button id="pomodoroButton" class="btn btn-default" type="submit" onclick="onPomodoroTimer()" >Pomodoro</button>
-          <button id="shortButton" class="btn btn-default" type="submit" onclick="onShortTimer()">Short Break</button>
-          <button id="longButton" class="btn btn-default" type="submit" onclick="onLongTimer()">Long Break</button>
+          <button id="pomodoroButton" class="btn btn-default" type="submit" onclick="onPomodoroTimer()" >Session</button>
+          <!-- <button id="shortButton" class="btn btn-default" type="submit" onclick="onShortTimer()">Short Break</button> -->
+          <button id="longButton" class="btn btn-default" type="submit" onclick="onLongTimer()">Break</button>
         </span>
+        
+        <br><br>
+        
+        <button class="btn btn-secondary">
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-down-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+  <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+</svg>
+		</button>
+
+		<button class ="btn btn-secondary" type="submit" onclick="increaseTime()">
+<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-up-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+  <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+</svg>
+        </button>
+        
       </h2>
     </div>
     <div class="panel panel-default">
@@ -100,28 +120,16 @@
             <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Start
           </button>
           <button id="stopButton" class="btn btn-danger btn-lg" type="submit" onclick="onStopTimer()">
-            <span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Stop
+            <span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Stop/Pause
           </button>
         </div>
       </div>
 
     </div>
 
-  </div>		
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-
-
+  </div>  	
+  
+	
 
 					<!-- End Timer -->
   <section class="main-container col2-right-layout">
@@ -129,7 +137,7 @@
       <div class="row">
       
           <aside class="col-left sidebar col-sm-3 animated" style="visibility: visible;">
-          <div class="page-title">
+          <div class="display-4">
               <h1>My Account </h1>
             </div>
           <div class="block block-account">
@@ -166,15 +174,7 @@
           <!--block block-account--> 
           
         </aside>
-        
-    
-        
-        
-        
-        
-        
-        
-        
+     
         
         <div class="col-main col-sm-9 animated" style="visibility: visible;">
           <div class="my-account">
@@ -566,7 +566,7 @@
 <script type="text/javascript" src="static/js/jquery.mobile-menu.min.js"></script> 
 <script type="text/javascript" src="static/js/cloud-zoom.js"></script>
 <script src="static/js/pomodoro-timer.js"></script>
-
+<script src="static/js/pom.js"></script>
   <script type="text/javascript">
  
 

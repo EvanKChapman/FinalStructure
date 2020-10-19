@@ -23,6 +23,13 @@ public class AppController {
 		return "home";
 	}
 	
+	
+	@GetMapping({"test"})
+	String test(Model model) {
+		model.addAttribute("msg", "test");
+		return "test";
+	}
+	
 	@GetMapping({"about"})
 	String about(Model model) {
 		model.addAttribute("msg", "abous us");
