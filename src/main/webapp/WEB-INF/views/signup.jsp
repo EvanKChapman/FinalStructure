@@ -51,12 +51,15 @@
   
   <!-- Main Container -->
   <section class="main-container col1-layout bounceInUp animated">
-    <div class="main container">
-      <div class="account-login">
+    <div class="main-container">
+      <div class="account-login" >
         <div class="page-title">
-          <h1>Register </h1>
+          <h1 class="text-center">Register ${registered}</h1>
         </div>
-        <fieldset class="col2-set">
+<%--          <form action="registeremail" method="post" role="form"> --%>
+         
+         
+        <fieldset class="col2-set center-block">
           
           <div class="col-1 registered-users"><strong>Customers</strong>
             <div class="content">
@@ -77,9 +80,9 @@
               
               <ul class="form-list">
                 <li>
-                  <label for="email">First Name<span class="required">*</span></label>
+                  <label for="name">First Name<span class="required">*</span></label>
                   <br>
-                  <form:input type="text" path="fname"  class="input-text"  placeholder="First Name"/>
+                  <form:input type="text" path="fname" class="input-text"  placeholder="First Name"/>
 		          <form:errors path="fname" class="required"/>
                 </li>
                 <li>
@@ -89,7 +92,7 @@
 		          <form:errors path="lname" class="required"/>
                 </li>
                 <li>
-                  <label for="password">Email <span class="required">*</span></label>
+                  <label for="email">Email <span class="required">*</span></label>
                   <br>
                   <form:input type="hidden" path="id"/>
 		          <form:input type="email" path="email" class="input-text"  placeholder="E-mail"/>
@@ -111,22 +114,33 @@
               </div>
               <p class="required">* Required Fields</p>
               <div class="buttons-set">
-                <button id="send2" name="" type="submit" class="button login"><span>Create Account</span></button>                
+                <button id="send2" name="" type="submit" class="button login"><span>Create Account</span></button>    
+                 
+                          
             </div>
+           
+           	
             </form:form>
-            
+           
+             
           </div>
           
           
         </fieldset>
+      
+<%--         </form>  --%>
       </div>
+      
       <br>
       <br>
       <br>
       <br>
       <br>
+       
     </div>
+   
   </section>
+   
   <!-- Main Container End --> 
   
    

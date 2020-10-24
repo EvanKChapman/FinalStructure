@@ -17,7 +17,7 @@ public class PhoneBook {
 	@JsonIgnore
 	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(name="users_id")
-	private Users user;
+	private Accounts user;
 	
 	public Long getId() {
 		return id;
@@ -38,10 +38,10 @@ public class PhoneBook {
 		this.type = type;
 	}
 	
-	public Users getUser() {
+	public Accounts getUser() {
 		return user;
 	}
-	public void setUser(Users user) {
+	public void setUser(Accounts user) {
 		this.user = user;
 	}
 	@Override

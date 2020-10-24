@@ -1,8 +1,3 @@
-
-
-
-
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -37,12 +32,19 @@
 <link rel="stylesheet" type="text/css"href="static/css/internal.css">
 <link rel="stylesheet" type="text/css"href="static/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"href="static/css/font-awesome.css" media="all">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+<link rel="stylesheet" href="static/css/stylepom.css">
+
+
+<link rel="stylesheet" href="style.css">
 <link rel="stylesheet" type="text/css"href="static/css/simple-line-icons.css" media="all">
 <link rel="stylesheet" type="text/css"href="static/css/style.css" media="all">
 <link rel="stylesheet" type="text/css"href="static/css/revslider.css" >
 <link rel="stylesheet" type="text/css"href="static/css/owl.carousel.css">
-<!-- <link rel="stylesheet" type="text/css"href="static/css/owl.theme.css">
-<link rel="stylesheet" type="text/css"href="static/css/flexslider.css"> -->
+
 <link rel="stylesheet" type="text/css"href="static/css/jquery.mobile-menu.css">
 
 
@@ -70,65 +72,49 @@
   <!-- Main Container -->
   
       <!-- Timer -->
-     
-      
-	 </div> 
-<div class="jquery-script-clear"></div>
-  <div class="container" style="margin-top:50px;">
-    <div class="page-header">
-      <h1 class="text-center">Pom Retain</h1>
-      <h2 class="text-center">
-        <span>
-          <button id="pomodoroButton" class="btn btn-default" type="submit" onclick="onPomodoroTimer()" >Session</button>
-          <!-- <button id="shortButton" class="btn btn-default" type="submit" onclick="onShortTimer()">Short Break</button> -->
-          <button id="longButton" class="btn btn-default" type="submit" onclick="onLongTimer()">Break</button>
-        </span>
-        
-        <br><br>
-        
-        <button class="btn btn-secondary">
-        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-down-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-  <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
-</svg>
-		</button>
-
-		<button class ="btn btn-secondary" type="submit" onclick="increaseTime()">
-<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-up-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-  <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
-</svg>
-        </button>
-        
-      </h2>
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-body text-center">
-        <div class="timer-time timer-container">
-          <div class="timer-time-set timer-box" id="currentTime">
-            <span id="hoursValue">00</span><span>:</span><span id="minutesValue">00</span><span>:</span><span id="secondsValue">00</span>
+   
+   <div id="pomodoro-container">
+      <div id="pomodoro-clock">
+        <div id="pomodoro-timer"></div>
+        <div>
+          <input type="text" id="pomodoro-clock-task" placeholder="Enter your task..." />
+        </div>
+        <div id="pomodoro-clock-actions">
+          <button id="pomodoro-start">
+            <i class="fas fa-play" id="play-icon"></i>
+            <i class="fas fa-pause hidden" id="pause-icon"></i>
+          </button>
+          <button id="pomodoro-stop" class="hidden">
+            <i class="fas fa-stop"></i>
+          </button>
+        </div>
+        <div id="pomodoro-clock-title">
+          <span>
+            Changes made here will reflect at the start of the next work /
+            break session
+          </span>
+        </div>
+        <div id="pomodoro-clock-actions">
+          <div class="pomodoro-input">
+            <label>Work Duration</label>
+            <input name="input-work-duration" id="input-work-duration" type="number" />
           </div>
-          <div class="timer-time-set timer-box" id="nextTime">
-            <span id="hoursNext">00</span><span>:</span><span id="minutesNext">00</span><span>:</span><span id="secondsNext">00</span>
+          <div class="pomodoro-input">
+            <label>Break Duration</label>
+            <input name="input-break-duration" id="input-break-duration" type="number" />
           </div>
         </div>
-        <div>
-          <button id="restartButton" class="btn btn-warning btn-lg" type="submit" onclick="onResetTimer()">
-            <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span> Reset
-          </button>
-          <button id="startButton" class="btn btn-primary btn-lg" type="submit" onclick="onStartTimer()">
-            <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Start
-          </button>
-          <button id="stopButton" class="btn btn-danger btn-lg" type="submit" onclick="onStopTimer()">
-            <span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Stop/Pause
-          </button>
+        <div id="pomodoro-info">
+          <h3>Your Sessions </h3>
+          <ul id="pomodoro-sessions">
+          </ul>
         </div>
       </div>
-
     </div>
-
-  </div>  	
-  
+    </div>
+   
+   
+   
 	
 
 					<!-- End Timer -->
@@ -163,7 +149,7 @@
               <ul id="product-detail-tab" class="product-tabs">               
                 <li class="active"><a href="#acc_info" data-toggle="tab" aria-expanded="true">Account Information</a></li>
                 <li><a href="#acc_update" data-toggle="tab" aria-expanded="false"><span> Address </span></a></li>
-                <li class=""> <a href="#acc_cards" data-toggle="tab" aria-expanded="false">Cards</a> </li>
+                <!-- <li class=""> <a href="#acc_cards" data-toggle="tab" aria-expanded="false">Cards</a> </li> -->
                 <li class=""> <a href="#acc_password" data-toggle="tab" aria-expanded="false">Change Password</a> </li>
                 
                 <li><a href="logout"><span> Logout</span></a></li>  
@@ -186,7 +172,7 @@
                 <ul id="product-detail-tab" class="nav nav-tabs product-tabs">
                   <li class="active"> <a href="#acc_info" data-toggle="tab" aria-expanded="true"> Account Detail </a> </li>
                   <li class=""> <a href="#acc_update" data-toggle="tab" aria-expanded="false">Update Address</a></li>
-                  <li class=""> <a href="#acc_cards" data-toggle="tab" aria-expanded="false">Cards</a> </li>
+                  <!-- <li class=""> <a href="#acc_cards" data-toggle="tab" aria-expanded="false">Cards</a> </li> -->
                   <li class=""> <a href="#acc_password" data-toggle="tab" aria-expanded="false">Change Password</a> </li>
                  
                 </ul>
@@ -206,6 +192,8 @@
 						            <div class="panel-heading"> <a data-toggle="collapse" data-parent="#faq-accordion" href="#question1"> 
 						            <span class="arrow-down">+</span> <span class="arrow-up">&#8211;</span> 
 						            Contact
+						            
+						            
 						            </a> </div>
 						            <div id="question1" class="panel-collapse collapse in">
 						              <div class="panel-body">
@@ -241,40 +229,9 @@
 						          </div>
 						          </div>
 						          </div>
-						          <div class="panel">
-						            <div class="panel-heading"> <a data-toggle="collapse" data-parent="#faq-accordion" href="#question3" class="collapsed"> 
-						            <span class="arrow-down">+</span> <span class="arrow-up">&#8211;</span>  Cards.</a> </div>
-						            <div id="question3" class="panel-collapse collapse">
-						              <div class="panel-body"> 
-						             <c:if test="${not empty user_account.getPaymentMethod()}">
-					                    <table class="table ">
-										 <tr class="text-success">
-										 <th>#</th>
-										 <th>Card Number</th>
-										 <th>Expiry</th>
-										 <th>Type</th>
-										 </tr>
-										 <tbody>
-					                    <c:set var="count" value="0"/>
-					                    <c:forEach var="cards" items="${user_account.getPaymentMethod()}">
-									    <c:set var="count" value="${count+1}"/>
-									     <tr>
-									       <td> ${count}.</td>
-									       <td> ${cards.cardno}</td>
-									       <td>
-									        ${cards.expiry}
-									        </td>
-									       <td> Visa
-									       <a href="deletecard?id=${cards.id}" onclick="confirmed(); return false;" class="btn btn-default"> <i class="fa fa-trash"></i></a>
-									       </td>			              
-									     </tr>
-									    </c:forEach>
-									    </tbody> 
-									    </table>
-									    </c:if>
-						              </div>
-						            </div>
-						          </div>				          
+						      
+				            
+				            <c:if test="${not empty user_account.getPhoneBook()}">				          
 						          <div class="panel">
 						            <div class="panel-heading"> <a data-toggle="collapse" data-parent="#faq-accordion" href="#question6" class="collapsed">
 						             <span class="arrow-down">+</span> <span class="arrow-up">&#8211;</span>
@@ -282,16 +239,30 @@
 						            <div id="question6" class="panel-collapse collapse">
 						              <div class="panel-body">
 						               <p class="text-secondary">	
+						                  <c:set var="f" value="0"/>
 										  <c:forEach var="fone" items="${user_account.getPhoneBook()}">
-								    		<i class="fa fa-check"></i>
-								    		${fone.type} ${fone.tel} 
+								    		<c:set var="f" value="${f+1}"/>
+								    		 <span class="text-success">&nbsp; ${f}. <b class="text-body">${fone.type} </b>${fone.tel}</span>&nbsp;
+								    		 <a href="deletetel?id=${fone.id}" onclick="confirmed(); return false;" >
+								    		  <i class="fa fa-times text-danger"></i></a>
 								    	 </c:forEach> 
 										</p>
+						                
 						               </div>
 						            </div>
 						          </div>
+						          </c:if>
+						          
 						        </div>
 				            </div>
+				            
+				            
+				            
+				            
+				            
+				            
+				            
+				            
 				            <!--dashboard--> 
 				          </div>
 				        </div>
@@ -555,7 +526,9 @@
 				    </div>
 					</div> 
 
-</div>					  
+</div>	
+
+</div>				  
 <!-- JavaScript --> 
 <script type="text/javascript" src="static/js/jquery.min.js"></script> 
 <script type="text/javascript" src="static/js/bootstrap.min.js"></script> 
@@ -565,6 +538,10 @@
 <script type="text/javascript" src="static/js/owl.carousel.min.js"></script> 
 <script type="text/javascript" src="static/js/jquery.mobile-menu.min.js"></script> 
 <script type="text/javascript" src="static/js/cloud-zoom.js"></script>
+
+<script src="static/js/progressBar.js"></script>
+<script src="static/js/scriptPom.js"></script>
+
 <script src="static/js/pomodoro-timer.js"></script>
 <script src="static/js/pom.js"></script>
   <script type="text/javascript">
@@ -606,7 +583,9 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
+
 </script>
+
 
 
 </body>

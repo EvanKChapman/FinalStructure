@@ -33,7 +33,7 @@ public class Addresses {
 	@JsonIgnore
 	@OneToOne
 	@MapsId
-	private Users user;
+	private Accounts user;
 	
 	@Column(name="file_name")
 	private String filename;
@@ -127,11 +127,11 @@ public class Addresses {
 		this.filename = filename;
 	}
 
-	public Users getUser() {
+	public Accounts getUser() {
 		return user;
 	}
 
-	public void setUser(Users user) {
+	public void setUser(Accounts user) {
 		this.user = user;
 	}
 

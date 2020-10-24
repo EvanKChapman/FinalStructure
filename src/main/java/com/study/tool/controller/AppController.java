@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.study.tool.model.Users;
+import com.study.tool.model.Accounts;
+//import com.study.tool.model.Users;
 
 @Controller
 public class AppController {
@@ -65,7 +66,7 @@ public class AppController {
 	@GetMapping({"signup"})
 	String signUp(Model model) {
 		model.addAttribute("msg", "Sign up");
-		model.addAttribute("users", new Users());
+		model.addAttribute("users", new Accounts());
 		
 		return "signup";
 	}

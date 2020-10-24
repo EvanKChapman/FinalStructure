@@ -14,7 +14,11 @@
 </head>
 <body>
 	<jsp:include page="components/header.jsp"/>
-	<h1>${msg}</h1>
+	<h1>About Us</h1>
+	<div>
+		<h3>We are focused on helping you retain your attention span.</h3>
+	
+	</div>
 
 <div class="container">
      

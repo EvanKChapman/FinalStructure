@@ -6,7 +6,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.study.tool.model.Users;
+import com.study.tool.model.Accounts;
+//import com.study.tool.model.Users;
 import com.study.tool.repository.UserRepository;
 
 @Component
@@ -14,19 +15,18 @@ public class DataValidation implements Validator {
 
 	@Autowired
 	public UserRepository userRepository;
-	//add regex validation
-	String emailRegex ="^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
-	String passwordRegex ="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=])(?=\\S+$).{8,}$";	
 	
-	@Override
+	String emailRegex ="^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+	String passwordRegex ="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=])(?=\\S+$).{8,}$";
+	
+	//String phoneRegex ="\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}";
+			
 	public boolean supports(Class<?> clazz) {
-		return Users.class.isAssignableFrom(clazz);
+		return Accounts.class.equals(clazz);
 	}
 
-	@Override
 	public void validate(Object o, Errors errors) {
-		
-		Users user = (Users) o;
+		Accounts user = (Accounts) o;
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "fname", "size.user.fname");		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lname", "size.user.lname");			

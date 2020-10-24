@@ -17,7 +17,7 @@ public class PaymentMethod {
 	
 	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(name="users_id")
-	private Users user;
+	private Accounts user;
 	
 	public PaymentMethod() {
 		super();
@@ -47,10 +47,10 @@ public class PaymentMethod {
 	public void setSecode(String secode) {
 		this.secode = secode;
 	}
-	public Users getUser() {
+	public Accounts getUser() {
 		return user;
 	}
-	public void setUser(Users user) {
+	public void setUser(Accounts user) {
 		this.user = user;
 	}
 	

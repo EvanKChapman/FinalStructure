@@ -9,30 +9,33 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.study.tool.model.Users;
+import com.study.tool.model.Accounts;
 
-public interface UserRepository extends JpaRepository<Users, Long> {
-	
-	String search="SELECT u FROM Users u WHERE u.email =:email AND " +
-		    "u.fname LIKE (CONCAT('%',:name, '%')) OR u.lname =:name";
-	
-	Optional<Users> findByEmail(String email);
-	
-	@Query("FROM Users u WHERE u.email=?1 AND u.password=?2")
-	Optional<Users> login(String email, String password);
 
+public interface UserRepository extends JpaRepository<Accounts, Long> {
 	
-	@Query("FROM Users WHERE lname=?1 OR fname=?1 OR email=?1")
-	List<Users> findByName(String name);
+	String search="SELECT u FROM Accounts u WHERE u.email =:email AND " +
+	  		  "u.fname LIKE (CONCAT('%',:name, '%')) OR u.lname =:name";
 	
-	@Query("FROM Users WHERE lname=?1 AND email=?2")
-	List<Users> findByName(String lname, String email);
+	String searchusers="SELECT u FROM Accounts u WHERE u.email =:name OR " +
+	  		  "u.fname LIKE (CONCAT('%',:name, '%')) OR u.lname LIKE (CONCAT('%',:name, '%'))";
 	
-	@Query("SELECT u FROM Users u WHERE u.lname=:name OR u.fname=:name")
-	List<Users> findByUser(@Param("name")String lname);
+	Optional<Accounts> findByEmail(String email);
 	
+	@Query("FROM Accounts u WHERE u.email=?1 AND u.password=?2")
+	Optional<Accounts> login(String email, String password);
+	
+	@Query("FROM Accounts WHERE lname=?1 OR fname=?1 OR email=?1")
+	List<Accounts> findByName(String name);
+	
+	@Query(searchusers)
+	Page<Accounts> search(@Param("name") String name, Pageable pageable);
+	
+	@Query("FROM Accounts WHERE lname=?1 AND email=?2")
+	List<Accounts> findByName(String lname, String email);
+		
 	@Query(search)
-	Page<Users> customeseacher(@Param("name") String name, @Param("email") String email, Pageable pageable);
+	Page<Accounts> customeseacher(@Param("name") String name, @Param("email") String email, Pageable pageable);
 	
 }
 

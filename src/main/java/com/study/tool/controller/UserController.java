@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
@@ -29,27 +31,33 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.study.tool.model.Accounts;
 import com.study.tool.model.Addresses;
 import com.study.tool.model.PaymentMethod;
 import com.study.tool.model.PhoneBook;
 import com.study.tool.model.Products;
 import com.study.tool.model.Role;
-import com.study.tool.model.Users;
+//import com.study.tool.model.Users;
 import com.study.tool.repository.AddressRepository;
 import com.study.tool.repository.PaymentMethodRepository;
 import com.study.tool.repository.PhoneBookRepository;
 import com.study.tool.repository.RoleRepository;
 import com.study.tool.repository.UserRepository;
+import com.study.tool.service.AccountService;
 import com.study.tool.utils.DataValidation;
 import com.study.tool.utils.States;
 import com.study.tool.utils.WebUtils;
+
 
 @Controller
 @SessionAttributes({"loggedInuser", "role"})
 public class UserController {
 	
 	@Autowired
-	private UserRepository userRepository;
+	private AccountService accountService;
+	
+//	@Autowired
+//	private UserRepository userRepository;
 	
 	@Autowired 
 	private WebUtils webUtils;
@@ -80,24 +88,32 @@ public class UserController {
 	@PostMapping("register")
 	@Transactional
 	
-	public String register(@ModelAttribute("users") Users user, Model model, BindingResult result, RedirectAttributes red) {
+	public String register(@ModelAttribute("users") Accounts user, Model model, BindingResult result, RedirectAttributes red) {
 		
-		dataValidation.validate(user, result);
-		
-		if (result.hasErrors()) {
-			model.addAttribute("profile", "active");
-			return "signup";
-		}
+		/*
+		 * dataValidation.validate(user, result);
+		 * 
+		 * if (result.hasErrors()) { model.addAttribute("profile", "active"); return
+		 * "signup"; }
+		 */
 		
 		// save users and put the in session/login
 				//user.setRole("USER");
-		 userRepository.saveAndFlush(user);
+			try {
+				webUtils.sendMail(user.getEmail(), "Hello There, General Kenobi", "TEST");
+				System.out.println("mail sent");
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				System.out.println("send failed");
+				e.printStackTrace();
+			}
+		 	accountService.saveAccount(user);
 		    user.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByRole("USER"))));
 			
 			model.addAttribute("msg","Profile");
 			model.addAttribute("user_account", user);
 			model.addAttribute("loggedInuser", user.getEmail());
-			model.addAttribute("role", user.getRole());
+			model.addAttribute("role", user.getRoles().stream().map(x-> x.getRole()).distinct().collect(Collectors.toList()));
 				
 				return "profile";
 
@@ -108,14 +124,14 @@ public class UserController {
 	@GetMapping("profile") 
 	  String profile(@SessionAttribute(required = false) String loggedInuser, Model model) {
 	     try {
-	    	 model.addAttribute("page", "Profile");
+	    	 //model.addAttribute("page", "Profile");
 	    	 //if user is not in session return login page expired session
-			if(loggedInuser.isEmpty() || loggedInuser ==null) {
+	    	 if(loggedInuser ==null || loggedInuser.isEmpty()) {
 				 model.addAttribute("error", "Expired session, please Login");
 				 return "login"; 
 			 }
 			//populate user details from database 
-			userRepository.findByEmail(loggedInuser).ifPresent(a->{
+			accountService.findByEmail(loggedInuser).ifPresent(a->{
 				 model.addAttribute("user_account", a);
 				 //model.addAttribute("image", Base64.getEncoder().encodeToString(a.getData()));
 				 if(a.getAddress()!=null) {
@@ -123,9 +139,11 @@ public class UserController {
 				 }
 			 });
 			
+			model.addAttribute("page", "Profile");
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			e.printStackTrace();
 		} 
 	  return "profile";
 	 }
@@ -168,23 +186,16 @@ public class UserController {
 		}
 	 
 	 
-	 
-	 @ModelAttribute("states")
-	    public List<States> populateStates(){    	
-	        return Arrays.asList(States.values());
-	    }	
-
-	
 	
 	
 	 @PostMapping("login")
 		String login(RedirectAttributes redirect, Model model, @RequestParam String email, @RequestParam String password){
 		  // login user
-		  Optional<Users> user= userRepository.login(email, password);
+		  Optional<Accounts> user= accountService.login(email, password);
 		 //add user email and role in session
 		  if(user.isPresent()) {
 			  model.addAttribute("loggedInuser", email);
-			  model.addAttribute("role", user.get().getRole()); 
+			  model.addAttribute("role", user.get().getRoles().stream().map(x-> x.getRole()).distinct().collect(Collectors.toList())); 
 			  
 		  }else {
 			  redirect.addFlashAttribute("error", "Invalid Credentials");
@@ -214,6 +225,27 @@ public class UserController {
 		 
 		return "redirect:contact";		
 		}
+	 
+	 
+	 
+	 @PostMapping("registeremail")
+	 String registeremail(@RequestParam String email,
+			 				@RequestParam String name,
+			 				@RequestParam(required=false) String subject,
+			 				@RequestParam(required=false) String message, RedirectAttributes red) {
+		 
+			try {
+				//webUtils.sendMail(email, message+" From "+ name, subject);
+				webUtils.sendMail(email, message, "Thank you for signing up with Pom Retain!"+ name + subject);
+				
+				red.addFlashAttribute("registered", "Thank you for signing up for Pom Retain! "+ name);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				red.addFlashAttribute("error", "Email fail! ");
+			}
+			return "redirect:home";
+	 }
 
 	 
 	 
@@ -255,7 +287,7 @@ public class UserController {
 	public String delete(@RequestParam Long id, RedirectAttributes red) {
 		
 		try {
-			userRepository.deleteById(id);
+			accountService.deleteAccounts(id);
 			red.addFlashAttribute("success", "Delete Success");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -272,7 +304,7 @@ public class UserController {
 		
 		
 		try {
-			userRepository.delete(userRepository.findByEmail(email).get());
+			//accountService(accountService.findByEmail(email).get());
 			red.addFlashAttribute("success", "user deleted");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -287,13 +319,21 @@ public class UserController {
 	
 	@GetMapping("admin")
 	public String users(Model model, @RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
-	            @RequestParam(value = "size", defaultValue = "4", required = false) Integer size) {
+	            @RequestParam(value = "size", defaultValue = "4", required = false) Integer size, @SessionAttribute(required = false) String role) {
 	        
 	        try {
+	        	if(role.equals("USER")) {    	    		
+    	    		return "redirect:profile?protected=true";
+	        	}
+	        	if(role ==null || role.isEmpty()) {
+   	    		 model.addAttribute("error", "Please Login");
+   	    		return "login";
+   	    	}
+	        	
 	        model.addAttribute("users", "active");
-	        Page<Users> findAllPagable = userRepository.findAll(PageRequest.of(page, size, Sort.by("fname")));
-	model.addAttribute("list", findAllPagable);
-	model.addAttribute("msg"," Users found");
+	        Page<Accounts> findAllPagable = accountService.findAll(PageRequest.of(page, size, Sort.by("fname")));
+	        model.addAttribute("list", findAllPagable);
+	        model.addAttribute("msg"," Accounts found");
 	  } catch (Exception e) {
 	// TODO Auto-generated catch block
 	e.printStackTrace();
@@ -305,14 +345,21 @@ public class UserController {
 	
 	
 	@PostMapping("updateUsers")
-	public String update(@ModelAttribute Users user, Model model, RedirectAttributes red) {
+	public String update(@ModelAttribute Accounts user, Model model, RedirectAttributes red) {
 		
 		try {
+			
+			accountService.findById(user.getId()).ifPresent(a->{
+				  a.setFname(user.getFname()); a.setLname(user.getLname());
+				  a.setRole(user.getRole()); 
+				  accountService.saveAccount(a);
+			 });
+			
 //		userRepository.findById(user.getId()).ifPresent(a->{
 //			a.setFname(user.getFname());
 //				a.setLname(user.getLname());
 				
-				userRepository.save(user);
+				//userRepository.save(user);
 				red.addFlashAttribute("success", "User Updated");
 			// });
 		} catch (Exception e) {
@@ -329,12 +376,12 @@ public class UserController {
 	String update(@ModelAttribute Addresses addresses, Model model) {
 	
 		try {
-			Users user=userRepository.findById(addresses.getId()).get();
+			addresses.setCreatedon(new Date());
+			Accounts user=accountService.findById(addresses.getId()).get();
 			user.setFname(addresses.getUser().getFname());
 			user.setLname(addresses.getUser().getLname());
-			addresses.setUser(user);
-			addresses.setCreatedon(new Date());
-			addressRepository.save(addresses);
+			user.setAddress(addresses);
+			accountService.saveAccount(user);	
 			model.addAttribute("msg", "Update success");
 			
 		} catch (Exception e) {
@@ -343,7 +390,6 @@ public class UserController {
 		}
 		
 		return "redirect:profile";	
-		
 	}
 	
 	
@@ -366,10 +412,10 @@ public class UserController {
 
 	
 	@GetMapping("deletecard")
-	String removeCard(@RequestParam Long id, RedirectAttributes red) {
+	String deleteCard(@RequestParam Long id, RedirectAttributes red) {
 		try {
 			paymentMethodRepository.deleteById(id);
-			red.addFlashAttribute("msg", "Card Removed");
+			red.addFlashAttribute("success", "Card Deleted");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -385,7 +431,7 @@ public class UserController {
 	
 		try {
 			PhoneBook book = new PhoneBook();
-			Users user=userRepository.findById(id).get();	
+			Accounts user=accountService.findById(id).get();	
 			book.setUser(user);
 			book.setTel(tel);
 			book.setType(type);
@@ -401,13 +447,26 @@ public class UserController {
 		
 	}
 	
-	
+	@GetMapping("deletetel")
+	public String deletetel(@RequestParam Long id, RedirectAttributes red) {
+		
+		try {
+			phoneBookRepository.deleteById(id);
+			red.addFlashAttribute("success", "Phone Deleted");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "redirect:profile";
+	}
 	
 	
 	@PostMapping("search") 
 	public String search(Model model, @RequestParam String keyword) {
-		model.addAttribute("list", userRepository.findByUser(keyword));
-		model.addAttribute("msg", "Users found");
+		Page<Accounts> accounts=accountService.search(keyword, PageRequest.of(0, 4, Sort.by("id")));
+		model.addAttribute("list", accounts);
+		model.addAttribute("msg"," Accounts found");
 		
 		return "admin";
 	}
@@ -416,25 +475,13 @@ public class UserController {
 	
 	
 	@PostMapping("editrole")
-	public String search(Model model, @RequestParam String role, @RequestParam Long id) {
+	public String editrole(Model model, @RequestParam String role, @RequestParam Long id) {
 		
 //		userRepository.findById(id).ifPresent(a -> {
 //			a.setRole(role);
 //			userRepository.save(a);
 //		});
-		
-		userRepository.findById(id).
-		ifPresent(a->{	
-			a.setRole(role);
-			if(role.equals("ADMIN")) {
-				a.setRoles(new HashSet<Role>(roleRepository.findAll()));
-				userRepository.save(a);
-			}
-			else {
-				a.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByRole(role))));
-				userRepository.save(a);
-			}				
-		});
+		accountService.editRoles(role, id);
 		
 		return "redirect:admin";
 	}
@@ -446,17 +493,53 @@ public class UserController {
 	
 	@PostMapping("searchByemailOrlastname")
 	public String searchByemailOrlastname(Model model, @RequestParam String lname, @RequestParam String email) {
-		Page<Users> users=userRepository.customeseacher(lname, email, PageRequest.of(0, 4, Sort.by("id")));
-		model.addAttribute("list", users);
-		model.addAttribute("msg", "Users found");
+		Page<Accounts> accounts=accountService.customeseacher(lname, email, PageRequest.of(0, 4, Sort.by("id")));
+		model.addAttribute("list", accounts);
+		model.addAttribute("msg"," Accounts found");
+		
 		return "admin";
 	}
 	
 	
-	@ModelAttribute("user")
-	Users user() {
+	@PostMapping("changepassword")	
+	String register(@ModelAttribute Accounts user, RedirectAttributes mod) {
+		String passwordRegex ="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=])(?=\\S+$).{8,}$";
 		
-		return new Users();
+		    accountService.findById(user.getId()).ifPresent(a->{			
+			
+			if(!a.getPassword().equals(user.getPassword())) {
+				mod.addFlashAttribute("error", "Password is different from current one");
+			}
+			
+			if(!user.getPassword2().matches(passwordRegex)) { 				
+				mod.addFlashAttribute("error", "Password should be at least 8 characters, lower case, upper case and a special character."); 
+			}
+			
+			if(a.getPassword().equals(user.getPassword()) && user.getPassword2().matches(passwordRegex)) {
+				a.setPassword(user.getPassword2());
+				accountService.saveAccount(a);
+				mod.addFlashAttribute("msg", "Password reset success");
+			}
+			
+		});
+		
+		return "redirect:profile";
+		
+	}
+	
+	
+	
+	
+	@ModelAttribute("states")
+    public List<States> populateStates(){    	
+        return Arrays.asList(States.values());
+    }
+	
+	
+	@ModelAttribute("user")
+	Accounts user() {
+		
+		return new Accounts();
 	}
 	
 	

@@ -56,6 +56,7 @@ private static final Logger log=(Logger) LoggerFactory.getLogger("WebUtils.class
         helper.setText(msg);
         helper.setSubject(subject);
         sender.send(message);
+        System.out.println("SENT EMAIL TO " + to + "message= " + msg + "subject=" + subject);
 	       
    }
 	   

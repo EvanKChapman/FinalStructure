@@ -25,21 +25,21 @@
     </head>
     
     
-      <c:choose>
+    <%--   <c:choose>
             <c:when test="${empty loggedInuser}">
-              <div class="login"><a href="login"><span class="hidden-xs">Log In</span></a></div>
-              <div class="login"><a href="signup"><span class="hidden-xs">Register</span></a></div>
+              <!-- <div class="login"><a href="login"><span class="hidden-xs">Log In</span></a></div>
+              <div class="login"><a href="signup"><span class="hidden-xs">Register</span></a></div> -->
             </c:when>
             <c:otherwise>
             
              <c:if test="${fn:contains(role, 'ADMIN')}">
-            <%-- <c:if test="${role eq 'ADMIN' || role eq 'DBA'}"> --%>
+            <c:if test="${role eq 'ADMIN' || role eq 'DBA'}">
               <div class="login"><a href="admin"><span class="hidden-xs">admin</span></a></div>
             </c:if>
               <div class="myaccount"><a title="My Account" href="profile"><span class="hidden-xs">My Account</span></a></div>
               <div class="myaccount"><a title="My Account" href="logout"><span class="hidden-xs">Logout</span></a></div>
             </c:otherwise>
-            </c:choose>
+            </c:choose> --%>
             
     <body id="page-top">
         <!-- Navigation-->

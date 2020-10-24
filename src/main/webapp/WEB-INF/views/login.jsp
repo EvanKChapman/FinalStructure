@@ -51,7 +51,7 @@
     <div class="main container">
       <div class="account-login">
         <div class="page-title">
-          <h1>Login or Create an Account</h1>
+          <h1 class="text-center">Login or Create an Account</h1>
         </div>
         <fieldset class="col2-set">
           <legend>Login or Create an Account</legend>
