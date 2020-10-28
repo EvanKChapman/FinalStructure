@@ -100,7 +100,7 @@ public class UserController {
 		// save users and put the in session/login
 				//user.setRole("USER");
 			try {
-				webUtils.sendMail(user.getEmail(), "Hello There, General Kenobi", "TEST");
+				webUtils.sendMail(user.getEmail(), "Hi There, Welcome to Pom Retain!", "Welcome");
 				System.out.println("mail sent");
 			} catch (MessagingException e) {
 				// TODO Auto-generated catch block

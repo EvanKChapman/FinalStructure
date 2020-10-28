@@ -59,9 +59,9 @@
 <%--          <form action="registeremail" method="post" role="form"> --%>
          
          
-        <fieldset class="col2-set center-block">
+        <fieldset class="col2-set center-block container">
           
-          <div class="col-1 registered-users"><strong>Customers</strong>
+          <div class="col-1 registered-users col-md-4"><strong>Customers</strong>
             <div class="content">
               <p><spring:message code="label.login"/></p><div class="buttons-set">
                 <a href="login" class="button create-account">
@@ -71,7 +71,7 @@
             </div>
           </div>
           
-          <div class="col-2 new-users"><strong>New Customers</strong>
+          <div class="col-2 new-users col-md-4"><strong>New Customers</strong>
             <form:form action="register" modelAttribute="users" method="post" >
             <div class="content">             
                 <h4 class="text-muted">

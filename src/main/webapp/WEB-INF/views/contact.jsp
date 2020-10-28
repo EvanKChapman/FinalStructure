@@ -102,9 +102,9 @@
           </div>
           </form>
         </section>
-        <aside class="col-right sidebar col-sm-3">
-          <div class="block block-company">
-            <div class="block-title">Company </div>
+        <!-- <aside class="col-right sidebar col-sm-3">
+          <div class="block block-company"> -->
+            <!-- <div class="block-title">Company </div>
             <div class="block-content">
               <ol id="recently-viewed-items">
                 <li class="item odd"><a href="#">About Us</a></li>
@@ -114,9 +114,9 @@
                 <li class="item last"><strong>Contact Us</strong></li>
               </ol>
             </div>
-          </div>
-        </aside>
-      </div>
+          </div> -->
+       <!--  </aside>
+      </div> -->
     </div>
   </section>
   <!-- Main Container End --> 
